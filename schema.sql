@@ -1,0 +1,26 @@
+CREATE TABLE Users (
+  id SERIAL PRIMARY KEY NOT NULL,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255),
+  email VARCHAR(255) UNIQUE NOT NULL,
+  dob DATE NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Posts (
+  id SERIAL PRIMARY KEY NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  createdAt TIMESTAMP NOT NULL DEFAULT now(),
+  content VARCHAR(150) NOT NULL,
+  user_id INTEGER  NOT NULL,
+  FOREIGN KEY ("user_id") REFERENCES Users(id)
+);
+
+CREATE TABLE Comments (
+  id SERIAL PRIMARY KEY NOT NULL,
+  content VARCHAR(150) NOT NULL,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY ("user_id") REFERENCES Users(id),
+  post_id INTEGER NOT NULL,
+  FOREIGN KEY ("post_id") REFERENCES Posts(id)
+);
